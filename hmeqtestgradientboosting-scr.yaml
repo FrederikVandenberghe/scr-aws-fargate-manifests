@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hmeqtestgradientboosting
+  namespace: sas-modelops-deployments
+  labels:
+    app-owner: viya_admin
+    app.kubernetes.io/name: hmeqtestgradientboosting
+  annotations:
+    CapacityProvisioned: 1vCPU 2GB
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app-owner: viya_admin
+      app.kubernetes.io/name: hmeqtestgradientboosting
+  template:
+    metadata:
+      labels:
+        app-owner: viya_admin
+        app.kubernetes.io/name: hmeqtestgradientboosting
+    spec:
+      containers:
+      - name: hmeqtestgradientboosting
+        image: xxxxxxxxxxxx.dkr.ecr.eu-west-2.amazonaws.com/hmeqtestgradientboosting:latest
+        ports:
+        - name: http
+          containerPort: 8080
+          protocol: TCP
+        #volumeMounts:
+        #- name: scr-db-secrets
+        #  mountPath: /opt/scr/secrets/db
+        imagePullPolicy: IfNotPresent
+        env:
+        # - name: "SAS_SCR_LOG_LEVEL_App.tk.MAS"
+        #   value: "INFO"
+        # - name: "SAS_SCR_LOG_LEVEL_App.TableServices.DS2.Runtime.SQL"
+        #   value: "INFO"
+        # - name: "SAS_SCR_LOG_LEVEL_App.TableServices.DS2.Runtime.Log"
+        #   value: "INFO"
+        - name: "SAS_SCR_APP_PATH"
+          value: "/score"
+        - name: "SAS_SCR_REST_API_TYPE"
+          value: "BATCH"
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          privileged: false
+          runAsUser: 1001
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+      restartPolicy: Always
+      securityContext: {}
+      imagePullSecrets:
+      - name: ecr-secret
+      #volumes:
+      #- name: scr-db-secrets
+      #  secret:
+      #    secretName: model-app-db.secrets
+      #    items:
+      #    - key: db.secrets
+      #      path: db.secrets
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.azure.com/mode
+                operator: NotIn
+                values:
+                - system
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hmeqtestgradientboosting
+  namespace: sas-modelops-deployments
+  labels:
+    app-owner: viya_admin
+    app.kubernetes.io/name: hmeqtestgradientboosting
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: internal
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+    service.beta.kubernetes.io/aws-load-balancer-subnets: subnet-0a29ab67f738dc55d, subnet-03d0baf698bf0ab5d
+spec:
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 8080
+  selector:
+    app-owner: viya_admin
+    app.kubernetes.io/name: hmeqtestgradientboosting
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 192.168.0.0/16
+    
