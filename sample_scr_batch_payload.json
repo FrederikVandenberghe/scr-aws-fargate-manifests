@@ -1,0 +1,72 @@
+{
+    "data": [
+        [
+            0,
+            {
+                "CLAGE": 94,
+                "CLNO": 9,
+                "DEBTINC": 37.11,
+                "DELINQ": 0,
+                "DEROG": 0,
+                "JOB": "Other",
+                "LOAN": 1100,
+                "MORTDUE": 25860,
+                "NINQ": 1,
+                "REASON": "HomeImp",
+                "VALUE": 39025,
+                "YOJ": 11
+            }
+        ],
+        [
+            1,
+            {
+                "CLAGE": 94,
+                "CLNO": 9,
+                "DEBTINC": 37.11,
+                "DELINQ": 0,
+                "DEROG": 0,
+                "JOB": "Other",
+                "LOAN": 1100,
+                "MORTDUE": 25860,
+                "NINQ": 1,
+                "REASON": "HomeImp",
+                "VALUE": 39025,
+                "YOJ": 11
+            }
+        ],
+        [
+            2,
+            {
+                "CLAGE": 94,
+                "CLNO": 9,
+                "DEBTINC": 37.11,
+                "DELINQ": 0,
+                "DEROG": 0,
+                "JOB": "Other",
+                "LOAN": 1100,
+                "MORTDUE": 25860,
+                "NINQ": 1,
+                "REASON": "HomeImp",
+                "VALUE": 39025,
+                "YOJ": 11
+            }
+        ],
+        [
+            3,
+            {
+                "CLAGE": 94,
+                "CLNO": 9,
+                "DEBTINC": 37.11,
+                "DELINQ": 0,
+                "DEROG": 0,
+                "JOB": "Other",
+                "LOAN": 1100,
+                "MORTDUE": 25860,
+                "NINQ": 1,
+                "REASON": "HomeImp",
+                "VALUE": 39025,
+                "YOJ": 11
+            }
+        ]
+    ]
+}
